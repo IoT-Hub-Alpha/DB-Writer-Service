@@ -1,1 +1,2 @@
 # Add your dependencies here
+git+https://github.com/IoT-Hub-Alpha/kafka-consumer-producer-lib.git@v1.0
