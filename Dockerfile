@@ -36,7 +36,8 @@ ENV PATH="$VENV_PATH/bin:$PATH"
 
 COPY --from=builder /app /app
 
-RUN chmod +x /app/scripts/entrypoint.sh \
+RUN chmod +x /app/scripts/entrypoint-worker.sh \
+    chmod +x /app/scripts/entrypoint-writer.sh \
     && adduser --disabled-password --gecos "" django \
     && chown -R django:django /app
 
