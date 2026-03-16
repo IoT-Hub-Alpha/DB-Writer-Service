@@ -3,7 +3,7 @@ from django.contrib.postgres.indexes import GinIndex
 
 class Telemetry(models.Model):
     id = models.BigAutoField(primary_key=True)
-    device = models.UUIDField(blank=False, null=False)
+    device = models.CharField(max_length=200, blank=False, null=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     payload = models.JSONField(
         help_text=(

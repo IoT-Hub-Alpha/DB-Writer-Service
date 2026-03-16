@@ -22,7 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-qft*v6y-@1x=t($w#-+9h$o_3$^*9jrxa9==8@g72a_d&vc8dm"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+if not SECRET_KEY or "insecure" in SECRET_KEY.lower():
+    raise ValueError("SECRET_KEY must be set to a secure value")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if str(os.getenv("DB_WRITER_DEBUG", "true")).lower() in [True, "true", "yes", True] else False
@@ -70,6 +72,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "db_writer.wsgi.application"
+
+# Settings
+KAFKA_TOPIC_TELEMETRY_CLEAN = os.getenv("KAFKA_TOPIC_TELEMETRY_CLEAN", "telemetry.clean")
+KAFKA_TOPIC_TELEMETRY_DLQ = os.getenv("KAFKA_TOPIC_TELEMETRY_DLQ", "telemetry.dlq")
+KAFKA_CLIENT_ID = os.getenv("DB_WRITER_KAFKA_CLIENT_ID", "db_writer")
 
 
 # Database
