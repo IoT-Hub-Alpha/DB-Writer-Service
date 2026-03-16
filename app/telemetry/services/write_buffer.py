@@ -63,14 +63,14 @@ class WriteBuffer:
 
             if msg.error():
                 self.logger.warning(
-                    "Bad message with error", extra={"error": msg.error(), "msg": msg}
+                    "Bad message with error", extra={"error": msg.error(), "kafka_msg": msg}
                 )
                 continue
 
             try:
                 data = json.loads(safe_decode(msg.value()))
             except json.JSONDecodeError:
-                self.logger.warning("Bad json data", extra={"msg": msg})
+                self.logger.warning("Bad json data", extra={"writer_msg": msg})
                 return
 
             self.buffer.append(
