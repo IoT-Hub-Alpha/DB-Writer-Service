@@ -17,7 +17,7 @@ RUN python -m venv $VENV_PATH \
     && $VENV_PATH/bin/pip install --no-cache-dir -r requirements.txt 
 
 COPY app/ ./
-COPY scripts/ ./scripts/
+COPY /scripts/ ./scripts/
 
 FROM python:3.13-slim AS runtime
 
@@ -37,7 +37,7 @@ ENV PATH="$VENV_PATH/bin:$PATH"
 COPY --from=builder /app /app
 
 RUN chmod +x /app/scripts/entrypoint-worker.sh \
-    chmod +x /app/scripts/entrypoint-writer.sh \
+    && chmod +x /app/scripts/entrypoint-writer.sh \
     && adduser --disabled-password --gecos "" django \
     && chown -R django:django /app
 
