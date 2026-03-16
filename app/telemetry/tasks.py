@@ -46,7 +46,7 @@ def bulk_telemetry_write(self, flush) -> dict[str, Any]:
                 )
                 bad_data.append(p)
                 continue
-            telem_data.append(Telemetry(payload=p.get("payload"), device_id=p.get("device_serial")))
+            telem_data.append(Telemetry(payload=p.get("payload"), device=p.get("device_serial")))
 
         if bad_data:
             logger.warning("No device id detected", extra={"bad_data": bad_data})
