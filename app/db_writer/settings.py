@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'iot_logging.django_helpers.RequestContextMiddleware',
 ]
 
 ROOT_URLCONF = "db_writer.urls"
@@ -148,63 +149,22 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-LOGGING_BASE = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {
-        "request_context": {"()": "config.logging.RequestContextFilter"},
-    },
-    "formatters": {
-        "verbose": {
-            "format": "{levelname} {asctime} {module} {message}",
-            "style": "{",
-        },
-        "json": {
-            "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
-            "fmt": (
-                "%(asctime)s %(levelname)s %(name)s %(message)s "
-                "%(request_id)s %(request_method)s %(request_path)s "
-                "%(task_id)s %(task_name)s"
-            ),
-            "rename_fields": {
-                "asctime": "timestamp",
-                "levelname": "level",
-                "name": "logger",
-            },
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'json': {
+            '()': 'iot_logging.StructuredJsonFormatter',
         },
     },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "json",
-            "filters": ["request_context"],
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'json',
         },
     },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
-    "loggers": {
-        "django.request": {
-            "level": "ERROR",
-            "propagate": True,
-        },
-        "django.server": {
-            "level": "INFO",
-            "propagate": True,
-        },
-        "celery": {
-            "level": "INFO",
-            "propagate": True,
-        },
-        "celery.task": {
-            "level": "INFO",
-            "propagate": True,
-        },
-        "apps.rules": {
-            "level": "INFO",
-            "propagate": True,
-        },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
     },
 }
