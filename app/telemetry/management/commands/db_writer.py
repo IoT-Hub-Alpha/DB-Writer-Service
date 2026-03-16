@@ -39,7 +39,7 @@ class Command(BaseCommand):
             options["dlq_topic"],
         )
         batch_size = options["batch_size"]
-        consumer_clean = IoTKafkaConsumer(group_id=clean_group_id, enable_auto_offset=False)
+        consumer_clean = IoTKafkaConsumer(group_id=clean_group_id, enable_auto_offset_store=False, enable_auto_commit=False)
         consumer_clean.subscribe([clean_topic])
         
         write_buffer = WriteBuffer(consumer_clean, poll_timeout, batch_size)
