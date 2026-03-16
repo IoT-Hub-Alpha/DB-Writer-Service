@@ -10,8 +10,8 @@ from django.conf import settings
 from django.utils.dateparse import parse_datetime
 from django.db import transaction
 from celery.exceptions import MaxRetriesExceededError
-from app.telemetry.services.publish_to_dlq import publish_flush_to_dlq
-from app.telemetry.models import Telemetry
+from telemetry.services.publish_to_dlq import publish_flush_to_dlq
+from telemetry.models import Telemetry
 
 @dataclass
 class WriterResult:

@@ -2,7 +2,7 @@ from time import sleep
 from IoTKafka import IoTKafkaConsumer
 from django.core.management.base import BaseCommand
 from django.conf import settings
-from app.telemetry.services.write_buffer import WriteBuffer
+from telemetry.services.write_buffer import WriteBuffer
 
 class Command(BaseCommand):
     help = "Consume telemetry.raw in BATCHES, validate, route, and publish."

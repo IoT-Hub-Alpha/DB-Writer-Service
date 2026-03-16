@@ -6,7 +6,7 @@ from typing import Any
 from django.utils.timezone import now
 from confluent_kafka import Producer
 from django.conf import settings
-from app.telemetry.services.data_structure import BufferedItem
+from telemetry.services.data_structure import BufferedItem
 
 _producer: Producer | None = None
 

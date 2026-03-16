@@ -4,9 +4,9 @@ from celery.result import AsyncResult
 from time import sleep, monotonic
 from confluent_kafka import TopicPartition
 from django.conf import settings
-from app.telemetry.tasks import bulk_telemetry_write
-from app.telemetry.services.helpers import dump_jsonl, safe_decode
-from app.telemetry.services.data_structure import BufferedItem, InFlight
+from telemetry.tasks import bulk_telemetry_write
+from telemetry.services.helpers import dump_jsonl, safe_decode
+from telemetry.services.data_structure import BufferedItem, InFlight
 
 
 class WriteBuffer:
