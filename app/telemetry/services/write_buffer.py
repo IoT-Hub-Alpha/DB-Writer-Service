@@ -63,7 +63,8 @@ class WriteBuffer:
 
             if msg.error():
                 self.logger.warning(
-                    "Bad message with error", extra={"error": msg.error(), "kafka_msg": msg}
+                    "Bad message with error",
+                    extra={"error": msg.error(), "kafka_msg": msg},
                 )
                 continue
 

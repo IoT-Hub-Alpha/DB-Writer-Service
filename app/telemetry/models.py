@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.indexes import GinIndex
 
+
 class Telemetry(models.Model):
     id = models.BigAutoField(primary_key=True)
     device = models.CharField(max_length=200, blank=False, null=False)

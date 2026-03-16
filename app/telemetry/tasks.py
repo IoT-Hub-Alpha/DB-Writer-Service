@@ -13,6 +13,7 @@ from celery.exceptions import MaxRetriesExceededError
 from telemetry.services.publish_to_dlq import publish_flush_to_dlq
 from telemetry.models import Telemetry
 
+
 @dataclass
 class WriterResult:
     success: bool = True
@@ -33,7 +34,6 @@ logger = logging.getLogger(__name__)
 @shared_task(bind=True, max_retries=2, default_retry_delay=60)
 def bulk_telemetry_write(self, flush) -> dict[str, Any]:
     producer = KafkaProducerManager()
-    serials = {p.get("device_serial") for p in flush}
     result = WriterResult()
     telem_data = []
     bad_data = []
@@ -46,7 +46,9 @@ def bulk_telemetry_write(self, flush) -> dict[str, Any]:
                 )
                 bad_data.append(p)
                 continue
-            telem_data.append(Telemetry(payload=p.get("payload"), device=p.get("device_serial")))
+            telem_data.append(
+                Telemetry(payload=p.get("payload"), device=p.get("device_serial"))
+            )
 
         if bad_data:
             logger.warning("No device id detected", extra={"bad_data": bad_data})

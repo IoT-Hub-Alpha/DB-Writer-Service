@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -27,7 +28,11 @@ if not SECRET_KEY or "insecure" in SECRET_KEY.lower():
     raise ValueError("SECRET_KEY must be set to a secure value")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if str(os.getenv("DB_WRITER_DEBUG", "true")).lower() in [True, "true", "yes", True] else False
+DEBUG = (
+    True
+    if str(os.getenv("DB_WRITER_DEBUG", "true")).lower() in [True, "true", "yes", True]
+    else False
+)
 
 ALLOWED_HOSTS = []
 
@@ -52,7 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'iot_logging.django_helpers.RequestContextMiddleware',
+    "iot_logging.django_helpers.RequestContextMiddleware",
 ]
 
 ROOT_URLCONF = "db_writer.urls"
@@ -75,7 +80,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "db_writer.wsgi.application"
 
 # Settings
-KAFKA_TOPIC_TELEMETRY_CLEAN = os.getenv("KAFKA_TOPIC_TELEMETRY_CLEAN", "telemetry.clean")
+KAFKA_TOPIC_TELEMETRY_CLEAN = os.getenv(
+    "KAFKA_TOPIC_TELEMETRY_CLEAN", "telemetry.clean"
+)
 KAFKA_TOPIC_TELEMETRY_DLQ = os.getenv("KAFKA_TOPIC_TELEMETRY_DLQ", "telemetry.dlq")
 KAFKA_CLIENT_ID = os.getenv("DB_WRITER_KAFKA_CLIENT_ID", "db_writer")
 DB_WRITER_LATENCY_MS = int(os.getenv("DB_WRITER_LATENCY_MS", "1000"))
@@ -150,21 +157,21 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'json': {
-            '()': 'iot_logging.StructuredJsonFormatter',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "json": {
+            "()": "iot_logging.StructuredJsonFormatter",
         },
     },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'json',
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "json",
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
     },
 }
