@@ -77,7 +77,13 @@ WSGI_APPLICATION = "db_writer.wsgi.application"
 KAFKA_TOPIC_TELEMETRY_CLEAN = os.getenv("KAFKA_TOPIC_TELEMETRY_CLEAN", "telemetry.clean")
 KAFKA_TOPIC_TELEMETRY_DLQ = os.getenv("KAFKA_TOPIC_TELEMETRY_DLQ", "telemetry.dlq")
 KAFKA_CLIENT_ID = os.getenv("DB_WRITER_KAFKA_CLIENT_ID", "db_writer")
-
+DB_WRITER_LATENCY_MS = int(os.getenv("DB_WRITER_LATENCY_MS", "1000"))
+DB_WRITER_BATCH_SIZE = int(os.getenv("DB_WRITER_BATCH_SIZE", 0))
+DB_WRITER_MAX_BUFFER_SIZE = int(os.getenv("DB_WRITER_MAX_BUFFER_SIZE", 500))
+DB_WRITER_MAX_FLUSH_ATTEMPTS = int(os.getenv("DB_WRITER_MAX_FLUSH_ATTEMPTS", 3))
+DB_WRITER_SAFETY_SLEEP = float(os.getenv("DB_WRITER_SAFETY_SLEEP", 0.1))
+DB_INSERT_BATCH_SIZE = int(os.getenv("DB_INSERT_BATCH_SIZE", 1000))
+DB_WRITER_CELERY_TIMEOUT_MIN = int(os.getenv("DB_WRITER_CELERY_TIMEOUT_MIN", 1))
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
