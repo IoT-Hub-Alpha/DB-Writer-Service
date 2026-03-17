@@ -71,7 +71,7 @@ def test_bulk_telemetry_write_happy_path(monkeypatch, fake_settings):
 
     monkeypatch.setattr(tasks, "settings", fake_settings)
     monkeypatch.setattr(tasks.transaction, "atomic", lambda: DummyAtomic())
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
 
     _patch_devices(tasks, {"A": 1, "B": 2})
     created = _patch_telemetry(tasks)
@@ -102,7 +102,7 @@ def test_bulk_telemetry_write_some_bad_serials_go_to_dlq(monkeypatch, fake_setti
 
     monkeypatch.setattr(tasks, "settings", fake_settings)
     monkeypatch.setattr(tasks.transaction, "atomic", lambda: DummyAtomic())
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
 
     _patch_devices(tasks, {"A": 1})
     created = _patch_telemetry(tasks)
@@ -136,7 +136,7 @@ def test_bulk_telemetry_write_all_bad_returns_early(monkeypatch, fake_settings):
 
     monkeypatch.setattr(tasks, "settings", fake_settings)
     monkeypatch.setattr(tasks.transaction, "atomic", lambda: DummyAtomic())
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
 
     _patch_devices(tasks, {})  # no devices
     created = _patch_telemetry(tasks)
@@ -168,7 +168,7 @@ def test_bulk_telemetry_write_db_error_triggers_retry(monkeypatch, fake_settings
 
     monkeypatch.setattr(tasks, "settings", fake_settings)
     monkeypatch.setattr(tasks.transaction, "atomic", lambda: DummyAtomic())
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
 
     _patch_devices(tasks, {"A": 1})
     _patch_telemetry(tasks, bulk_create_raises=tasks.OperationalError("db down"))
@@ -190,7 +190,7 @@ def test_bulk_telemetry_write_max_retries_dlq_success(monkeypatch, fake_settings
 
     monkeypatch.setattr(tasks, "settings", fake_settings)
     monkeypatch.setattr(tasks.transaction, "atomic", lambda: DummyAtomic())
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
 
     _patch_devices(tasks, {"A": 1})
     _patch_telemetry(tasks, bulk_create_raises=tasks.OperationalError("db down"))
@@ -218,7 +218,7 @@ def test_bulk_telemetry_write_max_retries_dlq_fail_sets_success_false(
 
     monkeypatch.setattr(tasks, "settings", fake_settings)
     monkeypatch.setattr(tasks.transaction, "atomic", lambda: DummyAtomic())
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
 
     _patch_devices(tasks, {"A": 1})
     _patch_telemetry(tasks, bulk_create_raises=tasks.OperationalError("db down"))
@@ -246,7 +246,7 @@ def test_bulk_create_is_single_insert_query(monkeypatch, settings):
 
     settings.DB_WRITER_BATCH_SIZE = 10_000
 
-    monkeypatch.setattr(tasks, "KafkaProducerManager", lambda: object())
+    monkeypatch.setattr(tasks, "IoTKafkaProducer", lambda: object())
     monkeypatch.setattr(tasks, "publish_flush_to_dlq", lambda *a, **k: True)
 
     monkeypatch.setattr(
