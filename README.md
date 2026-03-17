@@ -1,23 +1,26 @@
-# Service Name
+# Telemetry DB Writer
 
-Brief description.
+A service running a django menegment command to write data to a database with batching and celery worker queue
+
+reads telemetry clean and writes to its own time-seried postesql db
 
 ## Quick Start
 
+example env is located in root repo as per convention in db-writer.env.example
+
 ```bash
-cp .env.example .env
-docker-compose up
+docker compose up -d --build
 ```
 
-## Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `SERVICE_NAME` | Service name | Yes |
-| `DEBUG` | Debug mode | No |
 
 ## Testing
 
 ```bash
 pytest
+```
+
+or from docker compose
+```bash
+docker compose exec db-web pytest
 ```
