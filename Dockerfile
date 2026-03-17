@@ -18,6 +18,7 @@ RUN python -m venv $VENV_PATH \
 
 COPY app/ ./
 COPY /scripts/ ./scripts/
+COPY /tests/ ./tests/
 
 FROM python:3.13-slim AS runtime
 
