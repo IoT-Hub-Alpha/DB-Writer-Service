@@ -4,7 +4,7 @@ from celery import shared_task
 from typing import Any
 from dataclasses import dataclass
 from django.db import OperationalError, InterfaceError
-from IoTKafka import KafkaProducerManager
+from IoTKafka import IoTKafkaProducer
 from django.db.utils import DatabaseError
 from django.conf import settings
 from django.utils.dateparse import parse_datetime
@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 @shared_task(bind=True, max_retries=2, default_retry_delay=60)
 def bulk_telemetry_write(self, flush) -> dict[str, Any]:
-    producer = KafkaProducerManager()
+    producer = IoTKafkaProducer()
     result = WriterResult()
     telem_data = []
     bad_data = []

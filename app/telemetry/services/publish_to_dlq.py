@@ -3,6 +3,7 @@ from datetime import timezone
 from django.conf import settings
 from django.utils import timezone as tz
 from .helpers import safe_decode
+from IoTKafka import KafkaProducerError
 
 
 def publish_flush_to_dlq(
@@ -59,7 +60,7 @@ def publish_flush_to_dlq(
                     ],
                 )
                 break
-            except BufferError:
+            except (BufferError, KafkaProducerError):
                 producer.poll(0.2)
         else:
             return False
