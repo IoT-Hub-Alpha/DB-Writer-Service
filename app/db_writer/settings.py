@@ -92,10 +92,11 @@ DB_WRITER_MAX_FLUSH_ATTEMPTS = int(os.getenv("DB_WRITER_MAX_FLUSH_ATTEMPTS", 3))
 DB_WRITER_SAFETY_SLEEP = float(os.getenv("DB_WRITER_SAFETY_SLEEP", 0.1))
 DB_INSERT_BATCH_SIZE = int(os.getenv("DB_INSERT_BATCH_SIZE", 1000))
 DB_WRITER_CELERY_TIMEOUT_MIN = int(os.getenv("DB_WRITER_CELERY_TIMEOUT_MIN", 1))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "redis123")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 
-
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
-CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
+CELERY_BROKER_URL = f"redis://:{REDIS_PASSWORD}@redis:{REDIS_PORT}/0"
+CELERY_RESULT_BACKEND = f"redis://:{REDIS_PASSWORD}@redis:{REDIS_PORT}/0"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
