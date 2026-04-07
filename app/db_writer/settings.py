@@ -34,7 +34,7 @@ DEBUG = (
     else False
 )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['db-writer']
 
 
 # Application definition
